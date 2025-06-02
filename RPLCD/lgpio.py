@@ -189,7 +189,9 @@ class CharLCD(BaseCharLCD):
         if not isinstance(value, bool):
             raise ValueError('backlight_enabled must be set to ``True`` or ``False``.')
         self._backlight_enabled = value
-        lgpio.gpio_write(self.chip, self.pins.backlight, value ^ (self.backlight_mode == 'active_low'))
+        lgpio.gpio_write(
+            self.chip, self.pins.backlight, value ^ (self.backlight_mode == 'active_low')
+        )
 
     backlight_enabled = property(
         _get_backlight_enabled,
