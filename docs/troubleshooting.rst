@@ -50,3 +50,12 @@ if you're getting this error:
 The numbering mode is important, if you're unsure which one to use, search on
 Google/DuckDuckGo to learn about the differences between the two numbering
 modes.
+
+RuntimeError: Cannot determine SOC peripheral base address
+==========================================================
+
+This often happens when trying to use the ``RPi.GPIO`` library on a Raspberry
+Pi 5. Simply change your import statement to use ``lgpio`` instead:
+
+.. sourcecode:: python
+   from RPLCD.lgpio import CharLCD

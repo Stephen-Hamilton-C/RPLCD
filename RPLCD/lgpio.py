@@ -56,6 +56,8 @@ class CharLCD(BaseCharLCD):
         """
         Character LCD controller.
 
+        All provided pin numbers must be in the BCM numbering scheme.
+
         You can save 1 pin by not using RW. Set ``pin_rw`` to ``None`` if you
         want this.
 

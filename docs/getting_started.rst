@@ -62,6 +62,15 @@ the `Adafruit tutorial
 <https://learn.adafruit.com/character-lcds/wiring-a-character-lcd>`_ to learn
 how to wire up these circuits.
 
+Note that if you are using a Raspberry Pi 5, you'll need to use this import
+instead of the ``RPLCD.gpio`` one:
+.. sourcecode:: python
+
+    from RPLCD.lgpio import CharLCD
+
+Also remember that ``lgpio`` can only use the BCM numbering scheme, so your
+pin numbers must not be in the BOARD numbering scheme.
+
 Via pigpio
 ~~~~~~~~~~
 
@@ -131,7 +140,7 @@ First, import the RPLCD library from your Python script.
 
 .. sourcecode:: python
 
-    from RPLCD.gpio import CharLCD
+    from RPLCD.gpio import CharLCD  # import from RPLCD.lgpio if you're on a Raspberry Pi 5
 
 Then create a new instance of the :class:`~RPLCD.gpio.CharLCD` class. If you
 have a 20x4 LCD, you must at least specify the numbering mode and the pins you
