@@ -18,7 +18,7 @@ The main class for controlling GPIO (parallel) connected LCDs.
 CharLCD (lgpio)
 ===============
 
-The main class for controlling GPIO (parallel) connected LCDs on Raspberry Pi 5
+The main class for controlling GPIO (parallel) connected LCDs on Raspberry Pi 5 or newer
 using the lgpio_ backend.
 
 .. autoclass:: RPLCD.lgpio.CharLCD

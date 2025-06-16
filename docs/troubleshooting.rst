@@ -55,7 +55,7 @@ RuntimeError: Cannot determine SOC peripheral base address
 ==========================================================
 
 This often happens when trying to use the ``RPi.GPIO`` library on a Raspberry
-Pi 5. Simply change your import statement to use ``lgpio`` instead:
+Pi 5 or newer. Simply change your import statement to use ``lgpio`` instead:
 
 .. sourcecode:: python
    from RPLCD.lgpio import CharLCD
