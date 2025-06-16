@@ -52,7 +52,6 @@ class CharLCD(BaseCharLCD):
         auto_linebreaks=True,
         compat_mode=False,
     ):
-        # TODO: Update docstring
         """
         Character LCD controller.
 
