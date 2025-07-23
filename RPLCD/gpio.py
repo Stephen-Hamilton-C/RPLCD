@@ -20,7 +20,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 """
 
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 
 from .lcd_gpio import BaseGPIOCharLCD
 
@@ -42,6 +42,7 @@ class CharLCD(BaseGPIOCharLCD):
         charmap='A02',
         auto_linebreaks=True,
         compat_mode=False,
+        gpio_library=None,
     ):
         """
         Character LCD controller.
@@ -90,6 +91,9 @@ class CharLCD(BaseGPIOCharLCD):
         :param compat_mode: Whether to run additional checks to support older LCDs
             that may not run at the reference clock (or keep up with it).
         :type compat_mode: bool
+        :param gpio_library: The main GPIO library to use, compatible with RPi.GPIO.
+            For example, Jetson.GPIO can be passed.
+        :type gpio_library: Module
         """
         super().__init__(
             pin_rs,
@@ -107,24 +111,21 @@ class CharLCD(BaseGPIOCharLCD):
             compat_mode,
         )
 
-        if numbering_mode == GPIO.BCM or numbering_mode == GPIO.BOARD:
-            self.numbering_mode = numbering_mode
+        if gpio_library is None:
+            import RPi.GPIO as GPIO
+            self.gpio_library = GPIO
         else:
-            raise ValueError(
-                'Invalid GPIO numbering mode: numbering_mode=%s, '
-                'must be either GPIO.BOARD or GPIO.BCM.\n'
-                'See https://gist.github.com/dbrgn/77d984a822bfc9fddc844f67016d0f7e '
-                'for more details.' % numbering_mode
-            )
+            self.gpio_library = gpio_library
+        self.numbering_mode = numbering_mode
 
     def _start_gpio(self):
-        GPIO.setmode(self.numbering_mode)
+        self.gpio_library.setmode(self.numbering_mode)
 
     def _free_pins(self, pins):
-        GPIO.cleanup(pins)
+        self.gpio_library.cleanup(pins)
 
     def _write_pin(self, pin, value):
-        GPIO.output(pin, value)
+        self.gpio_library.output(pin, value)
 
     def _claim_output_pin(self, pin):
-        GPIO.setup(pin, GPIO.OUT)
+        self.gpio_library.setup(pin, self.gpio_library.OUT)
