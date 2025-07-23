@@ -95,6 +95,13 @@ class CharLCD(BaseGPIOCharLCD):
             For example, Jetson.GPIO can be passed.
         :type gpio_library: Module
         """
+        if gpio_library is None:
+            import RPi.GPIO as GPIO
+            self.gpio_library = GPIO
+        else:
+            self.gpio_library = gpio_library
+        self.numbering_mode = numbering_mode
+
         super().__init__(
             pin_rs,
             pin_rw,
@@ -110,13 +117,6 @@ class CharLCD(BaseGPIOCharLCD):
             auto_linebreaks,
             compat_mode,
         )
-
-        if gpio_library is None:
-            import RPi.GPIO as GPIO
-            self.gpio_library = GPIO
-        else:
-            self.gpio_library = gpio_library
-        self.numbering_mode = numbering_mode
 
     def _start_gpio(self):
         self.gpio_library.setmode(self.numbering_mode)
